@@ -9,9 +9,7 @@
         :root {
             --primary: #2563eb;
             --success: #10b981;
-            --danger: #ef4444;
             --bg: #f8fafc;
-            --card: #ffffff;
         }
 
         body { 
@@ -21,103 +19,100 @@
             color: #1e293b;
         }
 
-        /* Cabecera estilizada */
         .header {
             background: linear-gradient(135deg, #1e40af, #3b82f6);
             color: white;
             text-align: center;
-            padding: 40px 20px;
-            border-radius: 0 0 40px 40px;
+            padding: 30px 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        .header h1 { font-size: 28px; margin: 10px 0; font-weight: 700; }
-        .header p { font-size: 16px; margin: 0; opacity: 0.9; }
+        .container { padding: 20px; max-width: 1200px; margin: 0 auto; }
 
-        .container { padding: 20px; max-width: 800px; margin: 0 auto; }
-
-        /* Buscador mejorado */
         .search-bar {
-            margin: -30px 0 20px 0;
-            background: var(--card);
-            border-radius: 20px;
-            padding: 5px;
+            margin: 20px 0;
+            background: white;
+            border-radius: 12px;
             display: flex;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
         }
 
         .search-bar input {
             width: 100%;
-            padding: 15px 20px;
+            padding: 15px;
             font-size: 16px;
             border: none;
             outline: none;
-            border-radius: 20px;
+            border-radius: 12px;
         }
 
-        /* Botón añadir flotante o prominente */
         .add-button {
             background-color: var(--success);
             color: white;
-            text-align: center;
-            padding: 15px;
+            padding: 12px 24px;
             font-weight: 600;
-            border-radius: 15px;
-            margin-bottom: 20px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: transform 0.2s;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
+            gap: 8px;
+            border: none;
+            margin-bottom: 20px;
         }
 
-        .add-button:active { transform: scale(0.95); }
+        /* --- LA TABLA HORIZONTAL --- */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            overflow-x: auto; /* Permite scroll lateral si no cabe en el móvil */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
 
-        /* Tarjetas de llaves (Mejor que una tabla para móvil) */
-        .key-card {
-            background: var(--card);
-            border-radius: 15px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 800px; /* Asegura que se mantenga horizontal */
+        }
+
+        th {
+            background-color: #f1f5f9;
             padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            border-left: 5px solid var(--primary);
-            position: relative;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            border-bottom: 2px solid #e2e8f0;
         }
 
-        .key-card h3 { margin: 0 0 5px 0; font-size: 18px; color: #0f172a; }
-        .key-card p { margin: 2px 0; font-size: 14px; color: #64748b; }
-        
-        .badge {
-            display: inline-block;
-            padding: 4px 8px;
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+        }
+
+        tr:hover { background-color: #f8fafc; }
+
+        .badge-copies {
             background: #e0e7ff;
             color: #4338ca;
-            border-radius: 6px;
-            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 12px;
             font-weight: 600;
-            margin-top: 5px;
+            font-size: 12px;
         }
 
-        .card-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 15px;
-            margin-top: 10px;
-            border-top: 1px solid #f1f5f9;
-            padding-top: 10px;
-        }
-
-        .card-actions img { width: 24px; cursor: pointer; opacity: 0.7; }
-        .card-actions img:hover { opacity: 1; }
+        .actions { display: flex; gap: 10px; }
+        .actions img { width: 22px; cursor: pointer; transition: 0.2s; }
+        .actions img:hover { transform: scale(1.2); }
 
         /* Modales */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(3px);
+            background: rgba(0,0,0,0.5);
             justify-content: center;
             align-items: center;
             z-index: 1000;
@@ -125,53 +120,59 @@
 
         .modal-content {
             background: white;
-            padding: 30px;
-            border-radius: 25px;
-            width: 85%;
+            padding: 25px;
+            border-radius: 16px;
+            width: 90%;
             max-width: 500px;
         }
 
         input, textarea {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             margin: 8px 0;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
             box-sizing: border-box;
         }
 
-        .btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-secondary { background: #f1f5f9; color: #475569; }
+        .btn { padding: 10px 20px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; }
+        .btn-primary { background: var(--primary); color: white; margin-top: 10px; width: 100%; }
+        .btn-cancel { background: #f1f5f9; color: #475569; margin-top: 5px; width: 100%; }
 
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>🔑 Control de Llaves</h1>
-        <p>Gestión de Inventario Hospitalario</p>
+        <h1>🔑 Gestión de Llaves</h1>
+        <p>Vista Horizontal Profesional</p>
     </div>
 
     <div class="container">
         <div class="search-bar">
-            <input type="text" id="search" placeholder="Buscar por planta, zona o número...">
+            <input type="text" id="search" placeholder="Buscar por cualquier campo...">
         </div>
 
-        <div class="add-button" onclick="openModal()">
-            <span>➕</span> Añadir Nueva Llave
-        </div>
+        <button class="add-button" onclick="openModal()">
+            <span>➕</span> Añadir Llave
+        </button>
 
-        <div id="keysContainer"></div>
+        <div class="table-container">
+            <table id="keysTable">
+                <thead>
+                    <tr>
+                        <th>Planta</th>
+                        <th>Zona</th>
+                        <th>Nº Llave</th>
+                        <th>Despacho</th>
+                        <th>Ubicación</th>
+                        <th>Copias</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="keysBody"></tbody>
+            </table>
+        </div>
     </div>
 
     <div id="keyModal" class="modal">
@@ -181,19 +182,19 @@
             <input type="text" id="zona" placeholder="Zona">
             <input type="text" id="numero" placeholder="Número de llave">
             <input type="text" id="despacho" placeholder="Despacho/Puerta">
-            <input type="text" id="lugar" placeholder="Ubicación física (ej: Cajetín)">
+            <input type="text" id="lugar" placeholder="Ubicación física">
             <input type="number" id="copias" placeholder="Nº de copias">
-            <button class="btn btn-primary" onclick="saveKey()">Guardar Cambios</button>
-            <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+            <button class="btn btn-primary" onclick="saveKey()">Guardar</button>
+            <button class="btn btn-cancel" onclick="closeModal()">Cancelar</button>
         </div>
     </div>
 
     <div id="noteModal" class="modal">
         <div class="modal-content">
-            <h2>Notas de la llave</h2>
-            <textarea id="noteText" rows="5" placeholder="Escribe detalles importantes..."></textarea>
+            <h2>Notas</h2>
+            <textarea id="noteText" rows="5"></textarea>
             <button class="btn btn-primary" onclick="saveNote()">Guardar Nota</button>
-            <button class="btn btn-secondary" onclick="closeNoteModal()">Cerrar</button>
+            <button class="btn btn-cancel" onclick="closeNoteModal()">Cerrar</button>
         </div>
     </div>
 
@@ -202,45 +203,37 @@
         let currentEditIndex = -1;
         let currentNoteIndex = -1;
 
-        // Función para dibujar las llaves en pantalla
-        function renderKeys(filter = '') {
-            const container = document.getElementById('keysContainer');
-            container.innerHTML = '';
+        function renderTable(filter = '') {
+            const tbody = document.getElementById('keysBody');
+            tbody.innerHTML = '';
             
-            const filteredKeys = keys.filter(key => 
-                Object.values(key).some(val => 
-                    (val || '').toString().toLowerCase().includes(filter.toLowerCase())
-                )
+            const filtered = keys.filter(k => 
+                Object.values(k).some(v => (v||'').toString().toLowerCase().includes(filter.toLowerCase()))
             );
 
-            filteredKeys.forEach((key, index) => {
-                const card = document.createElement('div');
-                card.className = 'key-card';
-                card.innerHTML = `
-                    <h3>${key.planta || 'Sin Planta'} - ${key.despacho || 'S/D'}</h3>
-                    <p><strong>Zona:</strong> ${key.zona || '-'}</p>
-                    <p><strong>Nº Llave:</strong> ${key.numero || '-'}</p>
-                    <p><strong>Ubicación:</strong> ${key.lugar || '-'}</p>
-                    <span class="badge">Copias: ${key.copias || '0'}</span>
-                    
-                    <div class="card-actions">
-                        <img src="https://img.icons8.com/fluency/48/note.png" onclick="openNoteModal(${index})">
-                        <img src="https://img.icons8.com/fluency/48/edit.png" onclick="openModal(${index})">
-                        <img src="https://img.icons8.com/fluency/48/trash.png" onclick="deleteKey(${index})">
-                    </div>
+            filtered.forEach((key, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${key.planta || '-'}</strong></td>
+                    <td>${key.zona || '-'}</td>
+                    <td><code>${key.numero || '-'}</code></td>
+                    <td>${key.despacho || '-'}</td>
+                    <td>${key.lugar || '-'}</td>
+                    <td><span class="badge-copies">${key.copias || '0'}</span></td>
+                    <td class="actions">
+                        <img src="https://img.icons8.com/fluency/48/note.png" onclick="openNoteModal(${index})" title="Ver Nota">
+                        <img src="https://img.icons8.com/fluency/48/edit.png" onclick="openModal(${index})" title="Editar">
+                        <img src="https://img.icons8.com/fluency/48/trash.png" onclick="deleteKey(${index})" title="Borrar">
+                    </td>
                 `;
-                container.appendChild(card);
+                tbody.appendChild(tr);
             });
         }
 
-        // --- FUNCIONES LÓGICAS (IGUALES A LAS TUYAS PERO ADAPTADAS) ---
-
-        function openModal(index = -1) {
-            currentEditIndex = index;
-            document.getElementById('modalTitle').textContent = index === -1 ? 'Nueva Llave' : 'Editar Llave';
-            
-            if (index !== -1) {
-                const k = keys[index];
+        function openModal(i = -1) {
+            currentEditIndex = i;
+            if(i !== -1) {
+                const k = keys[i];
                 document.getElementById('planta').value = k.planta;
                 document.getElementById('zona').value = k.zona;
                 document.getElementById('numero').value = k.numero;
@@ -248,7 +241,7 @@
                 document.getElementById('lugar').value = k.lugar;
                 document.getElementById('copias').value = k.copias;
             } else {
-                document.querySelectorAll('#keyModal input').forEach(i => i.value = '');
+                document.querySelectorAll('#keyModal input').forEach(inp => inp.value = '');
             }
             document.getElementById('keyModal').style.display = 'flex';
         }
@@ -265,40 +258,38 @@
                 copias: document.getElementById('copias').value,
                 nota: currentEditIndex === -1 ? '' : (keys[currentEditIndex].nota || '')
             };
-
-            if (currentEditIndex === -1) keys.push(key);
+            if(currentEditIndex === -1) keys.push(key);
             else keys[currentEditIndex] = key;
-
             localStorage.setItem('hospitalKeys', JSON.stringify(keys));
             closeModal();
-            renderKeys();
+            renderTable();
         }
 
-        function deleteKey(index) {
-            if (confirm('¿Eliminar esta llave?')) {
-                keys.splice(index, 1);
+        function deleteKey(i) {
+            if(confirm('¿Borrar esta llave?')) {
+                keys.splice(i, 1);
                 localStorage.setItem('hospitalKeys', JSON.stringify(keys));
-                renderKeys();
+                renderTable();
             }
         }
 
-        function openNoteModal(index) {
-            currentNoteIndex = index;
-            document.getElementById('noteText').value = keys[index].nota || '';
+        function openNoteModal(i) {
+            currentNoteIndex = i;
+            document.getElementById('noteText').value = keys[i].nota || '';
             document.getElementById('noteModal').style.display = 'flex';
         }
 
         function saveNote() {
             keys[currentNoteIndex].nota = document.getElementById('noteText').value;
             localStorage.setItem('hospitalKeys', JSON.stringify(keys));
-            document.getElementById('noteModal').style.display = 'none';
+            closeNoteModal();
         }
 
         function closeNoteModal() { document.getElementById('noteModal').style.display = 'none'; }
 
-        document.getElementById('search').addEventListener('input', (e) => renderKeys(e.target.value));
+        document.getElementById('search').addEventListener('input', (e) => renderTable(e.target.value));
 
-        renderKeys();
+        renderTable();
     </script>
 </body>
 </html>
