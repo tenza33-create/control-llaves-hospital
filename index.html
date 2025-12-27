@@ -3,177 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Llaves</title>
+    <title>Control de Llaves Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; background-color: #f0f0f0; }
-        .header {
-            background: linear-gradient(to bottom, #007bff, #00c0ff);
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            border-radius: 0 0 30px 30px;
-        }
-        .header h1 { font-size: 36px; margin: 10px 0; }
-        .header p { font-size: 18px; margin: 0; opacity: 0.9; }
-        .key-icon { font-size: 60px; margin-bottom: 10px; }
-        
-        .container { padding: 20px; max-width: 1200px; margin: 0 auto; }
-        
-        .search-bar {
-            margin: 20px 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border-radius: 30px;
-            overflow: hidden;
-        }
-        .search-bar input {
-            width: 100%;
-            padding: 18px 25px;
-            font-size: 18px;
-            border: none;
-            outline: none;
-        }
-        
-        .add-button {
-            background-color: #28a745;
-            color: white;
-            text-align: center;
-            padding: 18px;
-            font-size: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            cursor: pointer;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        th {
-            background-color: #e9ecef;
-            padding: 15px;
-            text-align: left;
-            font-weight: bold;
-        }
-        td { padding: 15px; border-bottom: 1px solid #eee; vertical-align: middle; }
-        tr:last-child td { border-bottom: none; }
-        
-        .status-circle {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            background-color: #28a745;
-            color: white;
-            text-align: center;
-            line-height: 30px;
-            border-radius: 50%;
-            font-weight: bold;
-            margin-right: 10px;
-            font-size: 14px;
-        }
-        
-        .actions img {
-            width: 32px;
-            margin-left: 10px;
-            cursor: pointer;
+        :root {
+            --primary: #2563eb;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --card: #ffffff;
         }
 
-        /* Ventana modal */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            background-color: var(--bg); 
+            color: #1e293b;
+        }
+
+        /* Cabecera estilizada */
+        .header {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 0 0 40px 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 { font-size: 28px; margin: 10px 0; font-weight: 700; }
+        .header p { font-size: 16px; margin: 0; opacity: 0.9; }
+
+        .container { padding: 20px; max-width: 800px; margin: 0 auto; }
+
+        /* Buscador mejorado */
+        .search-bar {
+            margin: -30px 0 20px 0;
+            background: var(--card);
+            border-radius: 20px;
+            padding: 5px;
+            display: flex;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 16px;
+            border: none;
+            outline: none;
+            border-radius: 20px;
+        }
+
+        /* Botón añadir flotante o prominente */
+        .add-button {
+            background-color: var(--success);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-weight: 600;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .add-button:active { transform: scale(0.95); }
+
+        /* Tarjetas de llaves (Mejor que una tabla para móvil) */
+        .key-card {
+            background: var(--card);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary);
+            position: relative;
+        }
+
+        .key-card h3 { margin: 0 0 5px 0; font-size: 18px; color: #0f172a; }
+        .key-card p { margin: 2px 0; font-size: 14px; color: #64748b; }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #e0e7ff;
+            color: #4338ca;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 10px;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 10px;
+        }
+
+        .card-actions img { width: 24px; cursor: pointer; opacity: 0.7; }
+        .card-actions img:hover { opacity: 1; }
+
+        /* Modales */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(3px);
             justify-content: center;
             align-items: center;
-            z-index: 100;
+            z-index: 1000;
         }
+
         .modal-content {
             background: white;
-            padding: 25px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 600px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 30px;
+            border-radius: 25px;
+            width: 85%;
+            max-width: 500px;
         }
-        .modal-content h2 { margin-top: 0; }
+
         input, textarea {
             width: 100%;
             padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 16px;
+            margin: 8px 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            box-sizing: border-box;
         }
+
         .btn {
-            padding: 12px 20px;
-            margin: 10px 5px 0 0;
+            width: 100%;
+            padding: 14px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
+            font-weight: 600;
+            margin-top: 10px;
             cursor: pointer;
-            font-size: 16px;
         }
-        .btn-primary { background: #007bff; color: white; }
-        .btn-danger { background: #dc3545; color: white; }
-        .btn-secondary { background: #6c757d; color: white; }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-secondary { background: #f1f5f9; color: #475569; }
+
     </style>
 </head>
 <body>
+
     <div class="header">
-        <div class="key-icon">🔑</div>
-        <h1>Control de Llaves</h1>
-        <p>Hospital · Todo se guarda en tu móvil</p>
+        <h1>🔑 Control de Llaves</h1>
+        <p>Gestión de Inventario Hospitalario</p>
     </div>
 
     <div class="container">
         <div class="search-bar">
-            <input type="text" id="search" placeholder="Buscar llave...">
+            <input type="text" id="search" placeholder="Buscar por planta, zona o número...">
         </div>
 
         <div class="add-button" onclick="openModal()">
-            + Añadir Nueva Llave
+            <span>➕</span> Añadir Nueva Llave
         </div>
 
-        <table id="keysTable">
-            <thead>
-                <tr>
-                    <th>Planta</th>
-                    <th>Zona</th>
-                    <th>Número</th>
-                    <th>Despacho</th>
-                    <th>Lugar</th>
-                    <th>Copias</th>
-                    <th>Notas</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div id="keysContainer"></div>
     </div>
 
-    <!-- Modal para añadir/editar llave -->
     <div id="keyModal" class="modal">
         <div class="modal-content">
-            <h2 id="modalTitle">Añadir Nueva Llave</h2>
-            <input type="text" id="planta" placeholder="Planta (ej: CAPILLA 1)">
+            <h2 id="modalTitle">Nueva Llave</h2>
+            <input type="text" id="planta" placeholder="Planta">
             <input type="text" id="zona" placeholder="Zona">
-            <input type="text" id="numero" placeholder="Número (ej: 6204)">
-            <input type="text" id="despacho" placeholder="Despacho (ej: PUERTA DORMITORIO)">
-            <input type="text" id="lugar" placeholder="Lugar (ej: CAJETÍN PLANTA-1)">
-            <input type="text" id="copias" placeholder="Copias (ej: 2)">
-            <button class="btn btn-primary" onclick="saveKey()">Guardar Llave</button>
+            <input type="text" id="numero" placeholder="Número de llave">
+            <input type="text" id="despacho" placeholder="Despacho/Puerta">
+            <input type="text" id="lugar" placeholder="Ubicación física (ej: Cajetín)">
+            <input type="number" id="copias" placeholder="Nº de copias">
+            <button class="btn btn-primary" onclick="saveKey()">Guardar Cambios</button>
             <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
         </div>
     </div>
 
-    <!-- Modal para nota -->
     <div id="noteModal" class="modal">
         <div class="modal-content">
             <h2>Notas de la llave</h2>
-            <textarea id="noteText" rows="6" placeholder="Escribe aquí tus notas..."></textarea>
+            <textarea id="noteText" rows="5" placeholder="Escribe detalles importantes..."></textarea>
             <button class="btn btn-primary" onclick="saveNote()">Guardar Nota</button>
             <button class="btn btn-secondary" onclick="closeNoteModal()">Cerrar</button>
         </div>
@@ -181,92 +199,86 @@
 
     <script>
         let keys = JSON.parse(localStorage.getItem('hospitalKeys')) || [];
-        let currentEditIndex = -1; // para saber si estamos editando
+        let currentEditIndex = -1;
         let currentNoteIndex = -1;
 
-        function renderTable(filter = '') {
-            const tbody = document.querySelector('#keysTable tbody');
-            tbody.innerHTML = '';
+        // Función para dibujar las llaves en pantalla
+        function renderKeys(filter = '') {
+            const container = document.getElementById('keysContainer');
+            container.innerHTML = '';
             
-            keys.filter(key => 
+            const filteredKeys = keys.filter(key => 
                 Object.values(key).some(val => 
                     (val || '').toString().toLowerCase().includes(filter.toLowerCase())
                 )
-            ).forEach((key, index) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><span class="status-circle">-1</span>${key.planta || ''}</td>
-                    <td>${key.zona || ''}</td>
-                    <td>${key.numero || ''}</td>
-                    <td>${key.despacho || ''}</td>
-                    <td>${key.lugar || ''}</td>
-                    <td>${key.copias || ''}</td>
-                    <td class="actions">
-                        <img src="https://img.icons8.com/fluency/48/note.png" title="Nota" onclick="openNoteModal(${index})">
-                        <img src="https://img.icons8.com/fluency/48/edit.png" title="Editar" onclick="openModal(${index})">
-                        <img src="https://img.icons8.com/fluency/48/trash.png" title="Borrar" onclick="deleteKey(${index})">
-                    </td>
+            );
+
+            filteredKeys.forEach((key, index) => {
+                const card = document.createElement('div');
+                card.className = 'key-card';
+                card.innerHTML = `
+                    <h3>${key.planta || 'Sin Planta'} - ${key.despacho || 'S/D'}</h3>
+                    <p><strong>Zona:</strong> ${key.zona || '-'}</p>
+                    <p><strong>Nº Llave:</strong> ${key.numero || '-'}</p>
+                    <p><strong>Ubicación:</strong> ${key.lugar || '-'}</p>
+                    <span class="badge">Copias: ${key.copias || '0'}</span>
+                    
+                    <div class="card-actions">
+                        <img src="https://img.icons8.com/fluency/48/note.png" onclick="openNoteModal(${index})">
+                        <img src="https://img.icons8.com/fluency/48/edit.png" onclick="openModal(${index})">
+                        <img src="https://img.icons8.com/fluency/48/trash.png" onclick="deleteKey(${index})">
+                    </div>
                 `;
-                tbody.appendChild(tr);
+                container.appendChild(card);
             });
         }
 
+        // --- FUNCIONES LÓGICAS (IGUALES A LAS TUYAS PERO ADAPTADAS) ---
+
         function openModal(index = -1) {
             currentEditIndex = index;
-            document.getElementById('modalTitle').textContent = index === -1 ? 'Añadir Nueva Llave' : 'Editar Llave';
+            document.getElementById('modalTitle').textContent = index === -1 ? 'Nueva Llave' : 'Editar Llave';
             
-            if (index === -1) {
-                // Limpiar campos
-                document.getElementById('planta').value = '';
-                document.getElementById('zona').value = '';
-                document.getElementById('numero').value = '';
-                document.getElementById('despacho').value = '';
-                document.getElementById('lugar').value = '';
-                document.getElementById('copias').value = '';
+            if (index !== -1) {
+                const k = keys[index];
+                document.getElementById('planta').value = k.planta;
+                document.getElementById('zona').value = k.zona;
+                document.getElementById('numero').value = k.numero;
+                document.getElementById('despacho').value = k.despacho;
+                document.getElementById('lugar').value = k.lugar;
+                document.getElementById('copias').value = k.copias;
             } else {
-                // Rellenar con datos existentes
-                const key = keys[index];
-                document.getElementById('planta').value = key.planta || '';
-                document.getElementById('zona').value = key.zona || '';
-                document.getElementById('numero').value = key.numero || '';
-                document.getElementById('despacho').value = key.despacho || '';
-                document.getElementById('lugar').value = key.lugar || '';
-                document.getElementById('copias').value = key.copias || '';
+                document.querySelectorAll('#keyModal input').forEach(i => i.value = '');
             }
             document.getElementById('keyModal').style.display = 'flex';
         }
 
-        function closeModal() {
-            document.getElementById('keyModal').style.display = 'none';
-        }
+        function closeModal() { document.getElementById('keyModal').style.display = 'none'; }
 
         function saveKey() {
             const key = {
-                planta: document.getElementById('planta').value.trim(),
-                zona: document.getElementById('zona').value.trim(),
-                numero: document.getElementById('numero').value.trim(),
-                despacho: document.getElementById('despacho').value.trim(),
-                lugar: document.getElementById('lugar').value.trim(),
-                copias: document.getElementById('copias').value.trim(),
-                nota: keys[currentEditIndex]?.nota || ''  // conserva la nota si existe
+                planta: document.getElementById('planta').value,
+                zona: document.getElementById('zona').value,
+                numero: document.getElementById('numero').value,
+                despacho: document.getElementById('despacho').value,
+                lugar: document.getElementById('lugar').value,
+                copias: document.getElementById('copias').value,
+                nota: currentEditIndex === -1 ? '' : (keys[currentEditIndex].nota || '')
             };
 
-            if (currentEditIndex === -1) {
-                keys.push(key);
-            } else {
-                keys[currentEditIndex] = key;
-            }
+            if (currentEditIndex === -1) keys.push(key);
+            else keys[currentEditIndex] = key;
 
             localStorage.setItem('hospitalKeys', JSON.stringify(keys));
             closeModal();
-            renderTable(document.getElementById('search').value);
+            renderKeys();
         }
 
         function deleteKey(index) {
-            if (confirm('¿Seguro que quieres borrar esta llave?')) {
+            if (confirm('¿Eliminar esta llave?')) {
                 keys.splice(index, 1);
                 localStorage.setItem('hospitalKeys', JSON.stringify(keys));
-                renderTable(document.getElementById('search').value);
+                renderKeys();
             }
         }
 
@@ -276,22 +288,17 @@
             document.getElementById('noteModal').style.display = 'flex';
         }
 
-        function closeNoteModal() {
+        function saveNote() {
+            keys[currentNoteIndex].nota = document.getElementById('noteText').value;
+            localStorage.setItem('hospitalKeys', JSON.stringify(keys));
             document.getElementById('noteModal').style.display = 'none';
         }
 
-        function saveNote() {
-            keys[currentNoteIndex].nota = document.getElementById('noteText').value.trim();
-            localStorage.setItem('hospitalKeys', JSON.stringify(keys));
-            closeNoteModal();
-        }
+        function closeNoteModal() { document.getElementById('noteModal').style.display = 'none'; }
 
-        document.getElementById('search').addEventListener('input', e => {
-            renderTable(e.target.value);
-        });
+        document.getElementById('search').addEventListener('input', (e) => renderKeys(e.target.value));
 
-        // Cargar al abrir la página
-        renderTable();
+        renderKeys();
     </script>
 </body>
 </html>
