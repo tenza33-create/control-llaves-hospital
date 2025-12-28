@@ -6,7 +6,7 @@
     <title>Control de Llaves Hospital - Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #2563eb; --success: #10b981; --warning: #f59e0b; --bg: #f8fafc; }
+        :root { --primary: #2563eb; --success: #10b981; --warning: #f59e0b; --danger: #ef4444; --bg: #f8fafc; }
         body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--bg); color: #1e293b; }
         .header { background: linear-gradient(135deg, #1e40af, #3b82f6); color: white; text-align: center; padding: 30px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .container { padding: 20px; max-width: 1200px; margin: 0 auto; }
@@ -33,7 +33,7 @@
 
     <div class="header">
         <h1>🔑 Gestión de Llaves Hospital</h1>
-        <p>Base de Datos Sincronizada en la Nube</p>
+        <p>Base de Datos Protegida (Modo Lectura Libre)</p>
     </div>
 
     <div class="container">
@@ -42,7 +42,7 @@
         </div>
 
         <div class="button-group">
-            <button class="btn-action add-button" onclick="openModal()"><span>➕</span> Añadir Llave</button>
+            <button class="btn-action add-button" onclick="checkAuth('add')"><span>➕</span> Añadir Llave</button>
             <button class="btn-action download-button" onclick="exportToExcel()"><span>📥</span> Descargar Excel (Copia)</button>
         </div>
 
@@ -76,6 +76,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        // CONFIGURACIÓN DE TU FIREBASE
         const firebaseConfig = {
             apiKey: "AIzaSyAi1FauhxHA6yog87qFssToyH4bcWo0wDE",
             authDomain: "control-llaves-1ec8d.firebaseapp.com",
@@ -91,6 +92,20 @@
         const keysCol = collection(db, 'llaves');
         let keys = [];
         let currentEditId = null;
+
+        // --- CONTRASEÑA DE SEGURIDAD ---
+        const ADMIN_PASSWORD = "1234"; 
+
+        window.checkAuth = function(action, id = null) {
+            const pass = prompt("Introduce la contraseña para realizar cambios:");
+            if (pass === ADMIN_PASSWORD) {
+                if (action === 'add') openModal();
+                if (action === 'edit') prepareEdit(id);
+                if (action === 'delete') deleteKey(id);
+            } else if (pass !== null) {
+                alert("Contraseña incorrecta. Solo puedes consultar los datos.");
+            }
+        };
 
         onSnapshot(keysCol, (snapshot) => {
             keys = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -112,32 +127,25 @@
                     <td>${key.lugar || '-'}</td>
                     <td><span class="badge-copies">${key.copias || '0'}</span></td>
                     <td class="actions">
-                        <img src="https://img.icons8.com/fluency/48/edit.png" onclick="window.prepareEdit('${key.id}')">
-                        <img src="https://img.icons8.com/fluency/48/trash.png" onclick="window.deleteKey('${key.id}')">
+                        <img src="https://img.icons8.com/fluency/48/edit.png" onclick="window.checkAuth('edit', '${key.id}')">
+                        <img src="https://img.icons8.com/fluency/48/trash.png" onclick="window.checkAuth('delete', '${key.id}')">
                     </td>`;
                 tbody.appendChild(tr);
             });
         }
 
-        // --- FUNCIÓN DE DESCARGA EXCEL CONFIGURADA PARA ESPAÑA ---
         window.exportToExcel = function() {
             if(keys.length === 0) return alert("No hay llaves para descargar");
-            
-            // Usamos el BOM para que Excel detecte correctamente los acentos (UTF-8)
             let csvContent = "\uFEFF"; 
-            // Usamos punto y coma (;) como separador para Excel en español
             csvContent += "Planta;Zona;Número de Llave;Despacho;Ubicación;Copias\n";
-            
             keys.forEach(k => {
                 csvContent += `${k.planta || ''};${k.zona || ''};${k.numero || ''};${k.despacho || ''};${k.lugar || ''};${k.copias || '0'}\n`;
             });
-
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement("a");
             const url = URL.createObjectURL(blob);
             link.setAttribute("href", url);
             link.setAttribute("download", "copia_seguridad_llaves.csv");
-            link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -157,7 +165,7 @@
             closeModal();
         };
 
-        window.prepareEdit = (id) => {
+        function prepareEdit(id) {
             const k = keys.find(item => item.id === id);
             currentEditId = id;
             document.getElementById('planta').value = k.planta || '';
@@ -169,8 +177,13 @@
             document.getElementById('keyModal').style.display = 'flex';
         };
 
-        window.deleteKey = async (id) => { if(confirm('¿Borrar esta llave de la nube?')) await deleteDoc(doc(db, 'llaves', id)); };
-        window.openModal = () => { currentEditId = null; document.querySelectorAll('#keyModal input').forEach(i => i.value = ''); document.getElementById('keyModal').style.display = 'flex'; };
+        async function deleteKey(id) { 
+            if(confirm('¿Seguro que quieres borrar esta llave de la nube permanentemente?')) {
+                await deleteDoc(doc(db, 'llaves', id)); 
+            }
+        };
+
+        function openModal() { currentEditId = null; document.querySelectorAll('#keyModal input').forEach(i => i.value = ''); document.getElementById('keyModal').style.display = 'flex'; };
         window.closeModal = () => { document.getElementById('keyModal').style.display = 'none'; };
         document.getElementById('search').addEventListener('input', (e) => renderTable(e.target.value));
     </script>
