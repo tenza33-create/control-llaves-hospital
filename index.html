@@ -3,205 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Llaves Pro</title>
+    <title>Control de Llaves - Hospital</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #2563eb;
-            --success: #10b981;
-            --bg: #f8fafc;
-        }
-
-        body { 
-            font-family: 'Inter', sans-serif; 
-            margin: 0; 
-            background-color: var(--bg); 
-            color: #1e293b;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #1e40af, #3b82f6);
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
+        :root { --primary: #2563eb; --success: #10b981; --bg: #f8fafc; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--bg); color: #1e293b; }
+        .header { background: linear-gradient(135deg, #1e40af, #3b82f6); color: white; text-align: center; padding: 30px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .container { padding: 20px; max-width: 1200px; margin: 0 auto; }
-
-        .search-bar {
-            margin: 20px 0;
-            background: white;
-            border-radius: 12px;
-            display: flex;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
-        }
-
-        .search-bar input {
-            width: 100%;
-            padding: 15px;
-            font-size: 16px;
-            border: none;
-            outline: none;
-            border-radius: 12px;
-        }
-
-        .add-button {
-            background-color: var(--success);
-            color: white;
-            padding: 12px 24px;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            border: none;
-            margin-bottom: 20px;
-        }
-
-        /* --- LA TABLA HORIZONTAL --- */
-        .table-container {
-            background: white;
-            border-radius: 12px;
-            overflow-x: auto; /* Permite scroll lateral si no cabe en el móvil */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            min-width: 800px; /* Asegura que se mantenga horizontal */
-        }
-
-        th {
-            background-color: #f1f5f9;
-            padding: 15px;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #64748b;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        td {
-            padding: 15px;
-            border-bottom: 1px solid #f1f5f9;
-            font-size: 14px;
-        }
-
+        .search-bar { margin: 20px 0; background: white; border-radius: 12px; display: flex; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        .search-bar input { width: 100%; padding: 15px; font-size: 16px; border: none; outline: none; border-radius: 12px; }
+        .add-button { background-color: var(--success); color: white; padding: 12px 24px; font-weight: 600; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; border: none; margin-bottom: 20px; }
+        .table-container { background: white; border-radius: 12px; overflow-x: auto; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        table { width: 100%; border-collapse: collapse; text-align: left; min-width: 900px; }
+        th { background-color: #f1f5f9; padding: 15px; font-size: 13px; text-transform: uppercase; color: #64748b; border-bottom: 2px solid #e2e8f0; }
+        td { padding: 15px; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
         tr:hover { background-color: #f8fafc; }
-
-        .badge-copies {
-            background: #e0e7ff;
-            color: #4338ca;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 12px;
-        }
-
+        .badge-copies { background: #e0e7ff; color: #4338ca; padding: 2px 8px; border-radius: 12px; font-weight: 600; font-size: 12px; }
         .actions { display: flex; gap: 10px; }
         .actions img { width: 22px; cursor: pointer; transition: 0.2s; }
         .actions img:hover { transform: scale(1.2); }
-
-        /* Modales */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 25px;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 500px;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            box-sizing: border-box;
-        }
-
-        .btn { padding: 10px 20px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; }
-        .btn-primary { background: var(--primary); color: white; margin-top: 10px; width: 100%; }
-        .btn-cancel { background: #f1f5f9; color: #475569; margin-top: 5px; width: 100%; }
-
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: white; padding: 25px; border-radius: 16px; width: 90%; max-width: 500px; }
+        input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; }
+        .btn { padding: 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; width: 100%; margin-top: 10px; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-cancel { background: #f1f5f9; color: #475569; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>🔑 Gestión de Llaves</h1>
-        <p>Vista Horizontal Profesional</p>
+        <h1>🔑 Gestión de Llaves Hospital</h1>
+        <p>Sincronización en tiempo real</p>
     </div>
 
     <div class="container">
         <div class="search-bar">
-            <input type="text" id="search" placeholder="Buscar por cualquier campo...">
+            <input type="text" id="search" placeholder="Buscar por planta, zona o número...">
         </div>
-
-        <button class="add-button" onclick="openModal()">
-            <span>➕</span> Añadir Llave
-        </button>
+        <button class="add-button" onclick="openModal()"><span>➕</span> Añadir Nueva Llave</button>
 
         <div class="table-container">
-            <table id="keysTable">
+            <table>
                 <thead>
                     <tr>
-                        <th>Planta</th>
-                        <th>Zona</th>
-                        <th>Nº Llave</th>
-                        <th>Despacho</th>
-                        <th>Ubicación</th>
-                        <th>Copias</th>
-                        <th>Acciones</th>
+                        <th>Planta</th><th>Zona</th><th>Nº Llave</th><th>Despacho</th><th>Ubicación</th><th>Copias</th><th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody id="keysBody"></tbody>
+                <tbody id="keysBody">
+                    </tbody>
             </table>
         </div>
     </div>
 
     <div id="keyModal" class="modal">
         <div class="modal-content">
-            <h2 id="modalTitle">Nueva Llave</h2>
+            <h2 id="modalTitle">Detalles de la Llave</h2>
             <input type="text" id="planta" placeholder="Planta">
             <input type="text" id="zona" placeholder="Zona">
             <input type="text" id="numero" placeholder="Número de llave">
-            <input type="text" id="despacho" placeholder="Despacho/Puerta">
-            <input type="text" id="lugar" placeholder="Ubicación física">
-            <input type="number" id="copias" placeholder="Nº de copias">
-            <button class="btn btn-primary" onclick="saveKey()">Guardar</button>
+            <input type="text" id="despacho" placeholder="Despacho / Puerta">
+            <input type="text" id="lugar" placeholder="Ubicación física (Cajetín...)">
+            <input type="number" id="copias" placeholder="Cantidad de copias">
+            <button class="btn btn-primary" onclick="saveKey()">Guardar en la Nube</button>
             <button class="btn btn-cancel" onclick="closeModal()">Cancelar</button>
         </div>
     </div>
 
-    <div id="noteModal" class="modal">
-        <div class="modal-content">
-            <h2>Notas</h2>
-            <textarea id="noteText" rows="5"></textarea>
-            <button class="btn btn-primary" onclick="saveNote()">Guardar Nota</button>
-            <button class="btn btn-cancel" onclick="closeNoteModal()">Cerrar</button>
-        </div>
-    </div>
+    <script type="module">
+        // Importamos Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    <script>
-        let keys = JSON.parse(localStorage.getItem('hospitalKeys')) || [];
-        let currentEditIndex = -1;
-        let currentNoteIndex = -1;
+        // CONFIGURACIÓN REAL DE TU PROYECTO
+        const firebaseConfig = {
+            apiKey: "AIzaSyAi1FauhxHA6yog87qFssToyH4bcWo0wDE",
+            authDomain: "control-llaves-1ec8d.firebaseapp.com",
+            projectId: "control-llaves-1ec8d",
+            storageBucket: "control-llaves-1ec8d.firebasestorage.app",
+            messagingSenderId: "1062624044080",
+            appId: "1:1062624044080:web:b2ed5210f2028b2f5e79f5",
+            measurementId: "G-SCRC9CLE25"
+        };
+
+        // Inicializar
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const keysCol = collection(db, 'llaves');
+
+        let keys = [];
+        let currentEditId = null;
+
+        // --- MAGIA: Escuchar cambios y actualizar tabla automáticamente ---
+        onSnapshot(keysCol, (snapshot) => {
+            keys = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            renderTable();
+        });
 
         function renderTable(filter = '') {
             const tbody = document.getElementById('keysBody');
@@ -211,7 +108,7 @@
                 Object.values(k).some(v => (v||'').toString().toLowerCase().includes(filter.toLowerCase()))
             );
 
-            filtered.forEach((key, index) => {
+            filtered.forEach((key) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><strong>${key.planta || '-'}</strong></td>
@@ -221,75 +118,64 @@
                     <td>${key.lugar || '-'}</td>
                     <td><span class="badge-copies">${key.copias || '0'}</span></td>
                     <td class="actions">
-                        <img src="https://img.icons8.com/fluency/48/note.png" onclick="openNoteModal(${index})" title="Ver Nota">
-                        <img src="https://img.icons8.com/fluency/48/edit.png" onclick="openModal(${index})" title="Editar">
-                        <img src="https://img.icons8.com/fluency/48/trash.png" onclick="deleteKey(${index})" title="Borrar">
+                        <img src="https://img.icons8.com/fluency/48/edit.png" onclick="window.prepareEdit('${key.id}')">
+                        <img src="https://img.icons8.com/fluency/48/trash.png" onclick="window.deleteKey('${key.id}')">
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        function openModal(i = -1) {
-            currentEditIndex = i;
-            if(i !== -1) {
-                const k = keys[i];
-                document.getElementById('planta').value = k.planta;
-                document.getElementById('zona').value = k.zona;
-                document.getElementById('numero').value = k.numero;
-                document.getElementById('despacho').value = k.despacho;
-                document.getElementById('lugar').value = k.lugar;
-                document.getElementById('copias').value = k.copias;
-            } else {
-                document.querySelectorAll('#keyModal input').forEach(inp => inp.value = '');
-            }
-            document.getElementById('keyModal').style.display = 'flex';
-        }
-
-        function closeModal() { document.getElementById('keyModal').style.display = 'none'; }
-
-        function saveKey() {
-            const key = {
+        // --- FUNCIONES GLOBALES ---
+        window.saveKey = async function() {
+            const data = {
                 planta: document.getElementById('planta').value,
                 zona: document.getElementById('zona').value,
                 numero: document.getElementById('numero').value,
                 despacho: document.getElementById('despacho').value,
                 lugar: document.getElementById('lugar').value,
-                copias: document.getElementById('copias').value,
-                nota: currentEditIndex === -1 ? '' : (keys[currentEditIndex].nota || '')
+                copias: document.getElementById('copias').value
             };
-            if(currentEditIndex === -1) keys.push(key);
-            else keys[currentEditIndex] = key;
-            localStorage.setItem('hospitalKeys', JSON.stringify(keys));
-            closeModal();
-            renderTable();
-        }
 
-        function deleteKey(i) {
-            if(confirm('¿Borrar esta llave?')) {
-                keys.splice(i, 1);
-                localStorage.setItem('hospitalKeys', JSON.stringify(keys));
-                renderTable();
+            try {
+                if (currentEditId) {
+                    await updateDoc(doc(db, 'llaves', currentEditId), data);
+                } else {
+                    await addDoc(keysCol, data);
+                }
+                closeModal();
+            } catch (e) {
+                alert("Error: Asegúrate de haber activado 'Firestore Database' en Firebase y puesto las Reglas en modo prueba.");
             }
-        }
+        };
 
-        function openNoteModal(i) {
-            currentNoteIndex = i;
-            document.getElementById('noteText').value = keys[i].nota || '';
-            document.getElementById('noteModal').style.display = 'flex';
-        }
+        window.prepareEdit = function(id) {
+            const k = keys.find(item => item.id === id);
+            currentEditId = id;
+            document.getElementById('planta').value = k.planta;
+            document.getElementById('zona').value = k.zona;
+            document.getElementById('numero').value = k.numero;
+            document.getElementById('despacho').value = k.despacho;
+            document.getElementById('lugar').value = k.lugar;
+            document.getElementById('copias').value = k.copias;
+            document.getElementById('keyModal').style.display = 'flex';
+        };
 
-        function saveNote() {
-            keys[currentNoteIndex].nota = document.getElementById('noteText').value;
-            localStorage.setItem('hospitalKeys', JSON.stringify(keys));
-            closeNoteModal();
-        }
+        window.deleteKey = async function(id) {
+            if(confirm('¿Seguro que quieres borrar esta llave de la nube?')) {
+                await deleteDoc(doc(db, 'llaves', id));
+            }
+        };
 
-        function closeNoteModal() { document.getElementById('noteModal').style.display = 'none'; }
+        window.openModal = () => {
+            currentEditId = null;
+            document.querySelectorAll('#keyModal input').forEach(i => i.value = '');
+            document.getElementById('keyModal').style.display = 'flex';
+        };
+
+        window.closeModal = () => { document.getElementById('keyModal').style.display = 'none'; };
 
         document.getElementById('search').addEventListener('input', (e) => renderTable(e.target.value));
-
-        renderTable();
     </script>
 </body>
 </html>
