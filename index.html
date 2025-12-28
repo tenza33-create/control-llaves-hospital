@@ -33,12 +33,12 @@
 
     <div class="header">
         <h1>🔑 Gestión de Llaves Hospital</h1>
-        <p>Base de Datos Sincronizada</p>
+        <p>Base de Datos Sincronizada en la Nube</p>
     </div>
 
     <div class="container">
         <div class="search-bar">
-            <input type="text" id="search" placeholder="Buscar llave...">
+            <input type="text" id="search" placeholder="Buscar por planta, zona, número...">
         </div>
 
         <div class="button-group">
@@ -67,7 +67,7 @@
             <input type="text" id="despacho" placeholder="Despacho">
             <input type="text" id="lugar" placeholder="Ubicación física">
             <input type="number" id="copias" placeholder="Nº Copias">
-            <button class="btn-block" style="background:var(--primary); color:white" onclick="saveKey()">Guardar</button>
+            <button class="btn-block" style="background:var(--primary); color:white" onclick="saveKey()">Guardar en la Nube</button>
             <button class="btn-block" style="background:#f1f5f9" onclick="closeModal()">Cancelar</button>
         </div>
     </div>
@@ -119,21 +119,25 @@
             });
         }
 
-        // --- FUNCIÓN DE DESCARGA EXCEL ---
+        // --- FUNCIÓN DE DESCARGA EXCEL CONFIGURADA PARA ESPAÑA ---
         window.exportToExcel = function() {
             if(keys.length === 0) return alert("No hay llaves para descargar");
             
-            let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Planta,Zona,Numero,Despacho,Ubicacion,Copias\n";
+            // Usamos el BOM para que Excel detecte correctamente los acentos (UTF-8)
+            let csvContent = "\uFEFF"; 
+            // Usamos punto y coma (;) como separador para Excel en español
+            csvContent += "Planta;Zona;Número de Llave;Despacho;Ubicación;Copias\n";
             
             keys.forEach(k => {
-                csvContent += `${k.planta},${k.zona},${k.numero},${k.despacho},${k.lugar},${k.copias}\n`;
+                csvContent += `${k.planta || ''};${k.zona || ''};${k.numero || ''};${k.despacho || ''};${k.lugar || ''};${k.copias || '0'}\n`;
             });
 
-            const encodedUri = encodeURI(csvContent);
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
             link.setAttribute("download", "copia_seguridad_llaves.csv");
+            link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -156,16 +160,16 @@
         window.prepareEdit = (id) => {
             const k = keys.find(item => item.id === id);
             currentEditId = id;
-            document.getElementById('planta').value = k.planta;
-            document.getElementById('zona').value = k.zona;
-            document.getElementById('numero').value = k.numero;
-            document.getElementById('despacho').value = k.despacho;
-            document.getElementById('lugar').value = k.lugar;
-            document.getElementById('copias').value = k.copias;
+            document.getElementById('planta').value = k.planta || '';
+            document.getElementById('zona').value = k.zona || '';
+            document.getElementById('numero').value = k.numero || '';
+            document.getElementById('despacho').value = k.despacho || '';
+            document.getElementById('lugar').value = k.lugar || '';
+            document.getElementById('copias').value = k.copias || '';
             document.getElementById('keyModal').style.display = 'flex';
         };
 
-        window.deleteKey = async (id) => { if(confirm('¿Borrar llave?')) await deleteDoc(doc(db, 'llaves', id)); };
+        window.deleteKey = async (id) => { if(confirm('¿Borrar esta llave de la nube?')) await deleteDoc(doc(db, 'llaves', id)); };
         window.openModal = () => { currentEditId = null; document.querySelectorAll('#keyModal input').forEach(i => i.value = ''); document.getElementById('keyModal').style.display = 'flex'; };
         window.closeModal = () => { document.getElementById('keyModal').style.display = 'none'; };
         document.getElementById('search').addEventListener('input', (e) => renderTable(e.target.value));
